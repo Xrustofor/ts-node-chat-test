@@ -1,5 +1,6 @@
 import { Container, ContainerModule, interfaces } from 'inversify';
 import { App } from './app';
+import { SequelizeService } from './database/sequelizeService';
 import { ILogger } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
 import { TYPES } from './type';
@@ -11,6 +12,7 @@ export interface IBootstrapReturn {
 
 export const appBinding = new ContainerModule((bind: interfaces.Bind) => {
 	bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
+	bind<SequelizeService>(TYPES.SequelizeService).to(SequelizeService).inSingletonScope();
 	bind<App>(TYPES.Aplication).to(App);
 });
 
