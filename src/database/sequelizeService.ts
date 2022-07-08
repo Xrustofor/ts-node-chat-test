@@ -4,22 +4,21 @@ import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { ILogger } from '../logger/logger.interface';
 import { TYPES } from '../type';
-
-const DB_NAME = 'chat';
-const USER_NAME = 'root';
-const PASSWORD = '';
-const HOST = 'localhost';
+import { IConfigService } from '../config/config.service.interface';
 
 @injectable()
 export class SequelizeService {
 	client: Sequelize;
-	constructor(@inject(TYPES.ILogger) private logger: ILogger) {
+	constructor(
+		@inject(TYPES.ILogger) private logger: ILogger,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
+	) {
 		this.client = new Sequelize({
-			database: DB_NAME,
+			database: this.configService.get('DB_NAME'),
 			dialect: 'mysql',
-			username: USER_NAME,
-			password: PASSWORD,
-			host: HOST,
+			username: this.configService.get('DB_USER_NAME'),
+			password: this.configService.get('DB_PASSWORD'),
+			host: this.configService.get('DB_HOST'),
 			models: [User],
 		});
 	}

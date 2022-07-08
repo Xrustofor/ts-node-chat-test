@@ -5,7 +5,7 @@ import { ILogger } from './logger/logger.interface';
 import { TYPES } from './type';
 import 'reflect-metadata';
 import { SequelizeService } from './database/sequelizeService';
-// import connection from './database/database';
+import { IConfigService } from './config/config.service.interface';
 
 @injectable()
 export class App {
@@ -15,10 +15,13 @@ export class App {
 
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
+		@inject(TYPES.ConfigService) private configService: IConfigService,
 		@inject(TYPES.SequelizeService) private sequelizeService: SequelizeService,
 	) {
 		this.app = express();
 		this.port = 8000;
+
+		console.log(this.configService.get('SECRET'));
 	}
 
 	public async init(): Promise<void> {
