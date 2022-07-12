@@ -1,24 +1,61 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+// import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+
+// @Table({
+// 	tableName: 'users',
+// })
+// export class UserModel extends Model {
+// 	@Column({
+// 		type: DataType.INTEGER,
+// 		primaryKey: true,
+// 	})
+// 	id: number;
+
+// 	@Column({
+// 		type: DataType.STRING,
+// 		allowNull: false,
+// 	})
+// 	login: string;
+
+// 	@Column({
+// 		type: DataType.STRING,
+// 		allowNull: false,
+// 	})
+// 	password: string;
+// }
+
+import {
+	AllowNull,
+	AutoIncrement,
+	Column,
+	Model,
+	NotEmpty,
+	PrimaryKey,
+	Table,
+} from 'sequelize-typescript';
+
+export interface IUser {
+	id?: number | null;
+	login: string;
+	password: string;
+}
 
 @Table({
 	tableName: 'user',
+	timestamps: true,
 })
-export class User extends Model {
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	login: string;
+export class UserModel extends Model implements IUser {
+	@AutoIncrement
+	@PrimaryKey
+	@Column
+	id?: number;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	email: string;
+	@AllowNull(false)
+	@NotEmpty
+	@Column
+	login!: string;
 
-	@Column({
-		type: DataType.STRING,
-		allowNull: false,
-	})
-	password: string;
+	@AllowNull(false)
+	@NotEmpty
+	@Column
+	password!: string;
 }

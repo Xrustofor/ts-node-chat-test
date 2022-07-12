@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
-import { User } from '../models/user-model';
+import { UserModel } from '../models/user-model';
+import { TokenModel } from '../models/token-model';
 import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { ILogger } from '../logger/logger.interface';
@@ -19,7 +20,7 @@ export class SequelizeService {
 			username: this.configService.get('DB_USER_NAME'),
 			password: this.configService.get('DB_PASSWORD'),
 			host: this.configService.get('DB_HOST'),
-			models: [User],
+			models: [UserModel, TokenModel],
 		});
 	}
 
